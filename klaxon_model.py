@@ -3,6 +3,8 @@ from pydantic.fields import ModelField
 from model import Model
 from pydantic import BaseModel, BaseConfig
 
+from environment_variables import package_name
+
 """ Klaxon
 
 data class TestSchema(
@@ -21,7 +23,7 @@ class KlaxonModel(Model):
         model_config: BaseConfig = schema.__config__
 
         f = open(f"klaxonModels/{model_config.title}{self.extension}", "w")
-        # TODO text = "import Foundation\n\n" + text
+        text = f"{package_name}\n\n" + text
         f.write(text)
         f.close()
 
