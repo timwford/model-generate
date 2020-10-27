@@ -1,1 +1,1 @@
-package_name = "package io.homemetrics.homemetrics.schemas"
+package_name = "package io.package.package.schemas"
