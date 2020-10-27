@@ -22,12 +22,10 @@ data class TestSchema(
 class KlaxonModel(Model):
     def make_file(self, schema: BaseModel, text: str) -> bool:
         folder_name = 'klaxonModels'
-
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
 
         model_config: BaseConfig = schema.__config__
-
         f = open(f"{folder_name}/{model_config.title}{self.extension}", "w")
         text = f"{package_name}\n\n" + text
         f.write(text)
@@ -50,14 +48,18 @@ class KlaxonModel(Model):
 
             if data_type is str:
                 data_type_str = self.string_type
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
             elif data_type is int:
                 data_type_str = self.int_type
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
             elif data_type is float:
                 data_type_str = self.float_type
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
             elif data_type is bool:
                 data_type_str = self.bool_type
-
-            fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
+            else:
+                print("Unknown data type")
 
         field_text = ""
         for i in range(0, len(fields)):
@@ -86,10 +88,10 @@ class KlaxonModel(Model):
 
     def make_model(self, schema: BaseModel) -> str:
         model_config: BaseConfig = schema.__config__
-
+        
         fields_text = self.make_fields(schema)
         model_text = f"{self.container_type} {model_config.title}(\n{fields_text})"
-
+        
         self.make_file(schema, model_text)
 
         return model_text

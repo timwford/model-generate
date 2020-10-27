@@ -57,14 +57,18 @@ class SwiftLanguage(Model):
 
             if data_type is str:
                 data_type_str = self.string_type
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
             elif data_type is int:
                 data_type_str = self.int_type
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
             elif data_type is float:
                 data_type_str = self.float_type
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
             elif data_type is bool:
                 data_type_str = self.bool_type
-
-            fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
+                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
+            else:
+                print("Uknown data type")
 
         field_text = ""
         for field in fields:
