@@ -1,14 +1,14 @@
 from pydantic import BaseModel
 from schemas import TestSchema
-from devtools import debug
 
-from SwiftModel import swift
+from swift_model import swift
+from klaxon_model import klaxon
 
 def generate_swift_models(schema: BaseModel):
     return swift.make_model(schema)
 
-def generate_klaxon_models():
-    print("generating klaxon models")
+def generate_klaxon_models(schema: BaseModel):
+    return klaxon.make_model(schema)
 
 
 def generate_mobile_models(schema: BaseModel):

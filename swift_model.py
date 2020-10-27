@@ -2,7 +2,6 @@ from pydantic.fields import ModelField
 
 from model import Model
 from pydantic import BaseModel, BaseConfig
-from typing import List
 
 """ SwiftUI
 
@@ -24,10 +23,16 @@ struct TestSchema: Codable, Identifiable, Equatable {
 
 
 class SwiftLanguage(Model):
+    def make_file(self, schema: BaseModel, text: str) -> bool:
+        model_config: BaseConfig = schema.__config__
+
+        f = open(f"swiftSchema/{model_config.title}{self.extension}", "w")
+        text = "import Foundation\n\n" + text
+        f.write(text)
+        f.close()
+
     def make_fields(self, schema: BaseModel) -> str:
         fields = ["\tvar id = UUID()\n\n"]
-
-
         names_text = "\t\tcase"
 
         field_key: str
@@ -80,6 +85,8 @@ class SwiftLanguage(Model):
 
         fields_text = self.make_fields(schema)
         model_text = f"{self.container_type} {model_config.title}: {self.container_args} {{\n{fields_text}}}"
+
+        self.make_file(schema, model_text)
 
         return model_text
 
