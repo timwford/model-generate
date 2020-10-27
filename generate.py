@@ -16,12 +16,12 @@ def generate_mobile_models():
 
     for aModule in vars(schemas.schemas).values():
         print(aModule)
-
-        try:
-            generate_klaxon_models(aModule)
-            generate_swift_models(aModule)
-        except AttributeError:
-            print("not a pydantic model")
+        if aModule is not None:
+            try:
+                generate_klaxon_models(aModule)
+                generate_swift_models(aModule)
+            except AttributeError:
+                print("not a pydantic model")
 
     return True
 

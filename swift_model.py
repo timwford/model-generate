@@ -1,3 +1,4 @@
+import os
 from pydantic.fields import ModelField
 
 from model import Model
@@ -26,7 +27,12 @@ class SwiftLanguage(Model):
     def make_file(self, schema: BaseModel, text: str) -> bool:
         model_config: BaseConfig = schema.__config__
 
-        f = open(f"swiftSchema/{model_config.title}{self.extension}", "w")
+        folder_name = 'swiftModels'
+
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        f = open(f"{folder_name}/{model_config.title}{self.extension}", "w")
         text = "import Foundation\n\n" + text
         f.write(text)
         f.close()

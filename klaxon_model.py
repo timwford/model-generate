@@ -1,3 +1,4 @@
+import os
 from pydantic.fields import ModelField
 
 from model import Model
@@ -20,9 +21,14 @@ data class TestSchema(
 
 class KlaxonModel(Model):
     def make_file(self, schema: BaseModel, text: str) -> bool:
+        folder_name = 'klaxonModels'
+
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
         model_config: BaseConfig = schema.__config__
 
-        f = open(f"klaxonModels/{model_config.title}{self.extension}", "w")
+        f = open(f"{folder_name}/{model_config.title}{self.extension}", "w")
         text = f"{package_name}\n\n" + text
         f.write(text)
         f.close()
