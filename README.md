@@ -12,7 +12,7 @@ I want them generated!
 ```python
 from pydantic import BaseModel
 from typing import Optional, List
-from schemas.test_schema import DifferentTestSchema
+from schemas.schema import DifferentTestSchema
 
 class TestSchema(BaseModel):
     string_test: str
@@ -105,3 +105,7 @@ And look at the contents:
 cat swiftModels/TestSchema.swift
 cat kotlinModels/TestSchema.kt
 ```
+
+## Adding to your project
+
+Here is one way you can add `model-generate` onto your project.
