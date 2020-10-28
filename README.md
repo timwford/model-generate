@@ -27,7 +27,7 @@ class TestSchema(BaseModel):
         title = "TestSchema"
 ```
 
-model-generate will look for Pydantic models in a package you specify in the `generate.py` file. 
+model-generate will look for Pydantic models in the `schemas.schemas.py` file. 
 Any Pydantic models in that file will be loaded and converted.
 
 #### Generate Kotlin Data Classes...
