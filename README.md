@@ -35,11 +35,13 @@ Kotlin data classes are generated for use with the Klaxon JSON parser.
 package io.packagename.packagename.schemas
 
 data class TestSchema(
-	val string_test: String,
-	val int_test: Integer,
-	val float_test: Float,
-	val bool_test: Boolean,
-	val optional_test: String?
+        val string_test: String,
+        val int_test: Integer,
+        val float_test: Float,
+        val bool_test: Boolean,
+        val optional_test: DifferentTestSchema?,
+        val test_list: List<String>,
+        val test_list_2: List<DifferentTestSchema>
 )
 ```
 
@@ -58,10 +60,12 @@ struct TestSchema: Codable, Identifiable, Equatable {
 	var int_test: Int
 	var float_test: Float
 	var bool_test: Bool
-	var optional_test: String?
+	var optional_test: DifferentTestSchema?
+	var test_list: [String]
+	var test_list_2: [DifferentTestSchema]
 
 	private enum CodingKeys: String, CodingKey {
-		case string_test, int_test, float_test, bool_test, optional_test
+		case string_test, int_test, float_test, bool_test, optional_test, test_list, test_list_2
 	}
 }
 ```

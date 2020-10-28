@@ -51,13 +51,11 @@ class KlaxonModel(Model):
                 close_list_text = ">"
             else:
                 try:
-                    outer_name = outer_type._name
-                    print(outer_name)
-                    if outer_name == "List":
+                    if outer_type._name == "List":
                         list_text = "List<"
                         close_list_text = ">"
                 except AttributeError:
-                    print("Not a list")
+                    pass  # non list object
 
             if not required:
                 required_text = "?"

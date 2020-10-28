@@ -1,6 +1,8 @@
 import os
 from pydantic.fields import ModelField
 
+from typing import List
+
 from model import Model
 from pydantic import BaseModel, BaseConfig
 
@@ -44,11 +46,25 @@ class SwiftLanguage(Model):
         field_key: str
         for field_key in schema.__fields__:
             field: ModelField = schema.__fields__[field_key]
+            outer_type = field.outer_type_
             name: str = field.name
-            data_type: type = field.type_
+            data_type = field.type_
             required: bool = field.required
 
             names_text += f" {name},"
+
+            list_text = ""
+            close_list_text = ""
+            if outer_type in [List[str], List[int], List[bool], List[float]]:
+                list_text = "["
+                close_list_text = "]"
+            else:
+                try:
+                    if outer_type._name == "List":
+                        list_text = "["
+                        close_list_text = "]"
+                except AttributeError:
+                    pass  # non list object
 
             if not required:
                 required_text = "?"
@@ -57,24 +73,24 @@ class SwiftLanguage(Model):
 
             if data_type is str:
                 data_type_str = self.string_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
+
             elif data_type is int:
                 data_type_str = self.int_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
             elif data_type is float:
                 data_type_str = self.float_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
             elif data_type is bool:
                 data_type_str = self.bool_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text}\n")
             else:
-                print("Uknown data type")
+                data_type_str = field.type_.__name__
+
+            fields.append(
+                f"\t{self.variable_prefix} {name}: {list_text}{data_type_str}{required_text}{close_list_text}\n")
 
         field_text = ""
         for field in fields:
             field_text += str(field)
 
-        coding_keys_text = f"\n\tprivate enum CodingKeys: String, CodingKey {{\n{ names_text[:len(names_text)-1] }\n\t}}\n"
+        coding_keys_text = f"\n\tprivate enum CodingKeys: String, CodingKey {{\n{names_text[:len(names_text) - 1]}\n\t}}\n"
         field_text += coding_keys_text
 
         return field_text
