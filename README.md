@@ -27,7 +27,7 @@ class TestSchema(BaseModel):
         title = "TestSchema"
 ```
 
-model-generate will look for Pydantic models in a `schemas/schemas.py`. 
+model-generate will look for Pydantic models in a package you specify in the `generate.py` file. 
 Any Pydantic models in that file will be loaded and converted.
 
 #### Generate Kotlin Data Classes...
@@ -82,7 +82,22 @@ I'll probably make this better by adding the following:
 
 ## Getting Started
 
-You can experience the basic functionality by cloning the repository, loading the requirements, and running the "tests".
-This will generate two test schema. From there, you can put your own Pydantic models in and get them auto generated.
-Pydantic models are required to have a `title` in their Config.
+Clone the repository.
+
+Setup a virtual environment:
+```shell script
+python3 -m venv env
+source env/bin/activate
+```
+
+Install requirements:
+```shell script
+pip install -r requirements.txt
+```
+
+Run the "tests":
+```shell script
+pytest
+```
+And look at the contents in ``
 

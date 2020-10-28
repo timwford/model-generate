@@ -21,9 +21,9 @@ data class TestSchema(
 """
 
 
-class KlaxonModel(Model):
+class KotlinModel(Model):
     def make_file(self, schema: BaseModel, text: str) -> bool:
-        folder_name = 'klaxonModels'
+        folder_name = 'kotlinModels'
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
 
@@ -113,5 +113,5 @@ class KlaxonModel(Model):
         return model_text
 
 
-klaxon = KlaxonModel(".kt", "data class", "", "val", "Integer", "Boolean", "Float",
+klaxon = KotlinModel(".kt", "data class", "", "val", "Integer", "Boolean", "Float",
                      "String")
