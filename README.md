@@ -48,7 +48,7 @@ data class TestSchema(
 )
 ```
 
-#### And SwiftUI Structs!
+#### And SwiftUI Codeable Structs!
 
 SwiftUI models are generated to adhere to all the protocols necessary to use the models in a LazyVStack.
 Looks as follows.
@@ -109,3 +109,15 @@ cat kotlinModels/TestSchema.kt
 ## Adding to your project
 
 Here is one way you can add `model-generate` onto your project.
+
+- Add this repo as a submodule to your project
+- Use the following script to generate the models for you
+```shell script
+git submodule sync
+git submodule update --init --remote
+cp schemas.py model-generate/schemas
+python3 model-generate/generate.py
+```
+- Pay @jamckee
+
+Assuming you have a `schema.py` file in the directory you run this script in, this will generate all the models each time you run the script.
