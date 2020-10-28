@@ -1,6 +1,7 @@
 # model-generate
 
-I use FastAPI/Pydantic models for my server. But for mobile, I also use Klaxon for model parsing and I use Codable Structs in SwiftUI. 
+I use FastAPI/Pydantic models server-side. 
+But for mobile, I use Klaxon for JSON parsing and I use Codable Structs in SwiftUI. 
 I am tired of copying and/or writing out my models for server and twice for mobile. 
 I want them generated!
 
@@ -71,4 +72,10 @@ I'll probably make this better by adding the following:
 * Better testing
 * Add Klaxon camel case support
 * Setup guide
+
+## Getting Started
+
+You can experience the basic functionality by cloning the repository, loading the requirements, and running the "tests".
+This will generate two test schema. From there, you can put your own Pydantic models in and get them auto generated.
+Pydantic models are required to have a `title` in their Config.
 
