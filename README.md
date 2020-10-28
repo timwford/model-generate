@@ -26,7 +26,7 @@ class TestSchema(BaseModel):
 model-generate will look for Pydantic models in a `schemas/schemas.py`. 
 Any Pydantic models in that directory will be loaded and converted to...
 
-#### Kotlin Data Classes
+#### Generate Kotlin Data Classes...
 
 Kotlin data classes are generated for use with the Klaxon JSON parser.
 
@@ -42,7 +42,7 @@ data class TestSchema(
 )
 ```
 
-#### SwiftUI Structs
+#### And SwiftUI Structs!
 
 SwiftUI models are generated to adhere to all the protocols necessary to use the models in a LazyVStack.
 Looks as follows.
@@ -65,4 +65,10 @@ struct TestSchema: Codable, Identifiable, Equatable {
 }
 ```
 
-##
+## Future
+
+I'll probably make this better by adding the following:
+* Better testing
+* Add Klaxon camel case support
+* Setup guide
+
