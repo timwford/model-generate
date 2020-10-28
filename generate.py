@@ -22,7 +22,7 @@ def generate_mobile_models():
                 generate_klaxon_models(aModule)
                 generate_swift_models(aModule)
             except AttributeError as e:
-                print(e)
+                pass  # not a pydantic model
 
     return True
 

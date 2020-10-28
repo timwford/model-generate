@@ -11,14 +11,17 @@ I want them generated!
 
 ```python
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+from schemas.test_schema import DifferentTestSchema
 
 class TestSchema(BaseModel):
     string_test: str
     int_test: int
     float_test: float
     bool_test: bool
-    optional_test: Optional[str] = None
+    optional_test: Optional[DifferentTestSchema] = None
+    test_list: List[str]
+    test_list_2: List[DifferentTestSchema]
 
     class Config:
         title = "TestSchema"
