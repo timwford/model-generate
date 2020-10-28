@@ -99,5 +99,9 @@ Run the "tests":
 ```shell script
 pytest
 ```
-And look at the contents in ``
 
+And look at the contents:
+```shell script
+cat swiftModels/TestSchema.swift
+cat kotlinModels/TestSchema.kt
+```
