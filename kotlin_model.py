@@ -44,12 +44,20 @@ class KlaxonModel(Model):
             data_type = field.type_
             required: bool = field.required
 
-            is_list = False
-
-            print(outer_type)
+            list_text = ""
+            close_list_text = ""
             if outer_type in [List[str], List[int], List[bool], List[float]]:
-                print("OUTER for {}: {}".format(name, outer_type))
-                is_list = True
+                list_text = "List<"
+                close_list_text = ">"
+            else:
+                try:
+                    outer_name = outer_type._name
+                    print(outer_name)
+                    if outer_name == "List":
+                        list_text = "List<"
+                        close_list_text = ">"
+                except AttributeError:
+                    print("Not a list")
 
             if not required:
                 required_text = "?"
@@ -58,21 +66,18 @@ class KlaxonModel(Model):
 
             if data_type is str:
                 data_type_str = self.string_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
+
             elif data_type is int:
                 data_type_str = self.int_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
             elif data_type is float:
                 data_type_str = self.float_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
             elif data_type is bool:
                 data_type_str = self.bool_type
-                fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
-            elif data_type is list:
-                fields.append(f"\t{self.variable_prefix} {name}: List[{required_text}],")
             else:
-                print("DATA TYPE for {}: {}".format(name, data_type))
-                fields.append(f"\t{self.variable_prefix} {name}: {field_key.title()}{required_text},")
+                data_type_str = field.type_.__name__
+
+            fields.append(
+                f"\t{self.variable_prefix} {name}: {list_text}{data_type_str}{required_text}{close_list_text},")
 
         field_text = ""
         for i in range(0, len(fields)):

@@ -14,6 +14,7 @@ class TestSchema(BaseModel):
     bool_test: bool
     optional_test: Optional[DifferentTestSchema] = None
     test_list: List[str]
+    test_list_2: List[DifferentTestSchema]
 
     class Config:
         title = "TestSchema"
