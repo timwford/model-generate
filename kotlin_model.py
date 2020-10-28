@@ -1,6 +1,8 @@
 import os
 from pydantic.fields import ModelField
 
+from typing import Optional, List, Any
+
 from model import Model
 from pydantic import BaseModel, BaseConfig
 
@@ -37,9 +39,17 @@ class KlaxonModel(Model):
         field_key: str
         for field_key in schema.__fields__:
             field: ModelField = schema.__fields__[field_key]
+            outer_type = field.outer_type_
             name: str = field.name
-            data_type: type = field.type_
+            data_type = field.type_
             required: bool = field.required
+
+            is_list = False
+
+            print(outer_type)
+            if outer_type in [List[str], List[int], List[bool], List[float]]:
+                print("OUTER for {}: {}".format(name, outer_type))
+                is_list = True
 
             if not required:
                 required_text = "?"
@@ -58,18 +68,21 @@ class KlaxonModel(Model):
             elif data_type is bool:
                 data_type_str = self.bool_type
                 fields.append(f"\t{self.variable_prefix} {name}: {data_type_str}{required_text},")
+            elif data_type is list:
+                fields.append(f"\t{self.variable_prefix} {name}: List[{required_text}],")
             else:
-                print("Unknown data type")
+                print("DATA TYPE for {}: {}".format(name, data_type))
+                fields.append(f"\t{self.variable_prefix} {name}: {field_key.title()}{required_text},")
 
         field_text = ""
         for i in range(0, len(fields)):
             field = fields[i]
 
-            if i != len(fields)-1:
+            if i != len(fields) - 1:
                 field_text += str(field + "\n")
             else:
                 field_str = str(field)
-                field_text += field_str[:len(field_str)-1]
+                field_text += field_str[:len(field_str) - 1]
 
         field_text += "\n"
 
@@ -88,14 +101,14 @@ class KlaxonModel(Model):
 
     def make_model(self, schema: BaseModel) -> str:
         model_config: BaseConfig = schema.__config__
-        
+
         fields_text = self.make_fields(schema)
         model_text = f"{self.container_type} {model_config.title}(\n{fields_text})"
-        
+
         self.make_file(schema, model_text)
 
         return model_text
 
 
 klaxon = KlaxonModel(".kt", "data class", "", "val", "Integer", "Boolean", "Float",
-                      "String")
+                     "String")

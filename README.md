@@ -25,7 +25,7 @@ class TestSchema(BaseModel):
 ```
 
 model-generate will look for Pydantic models in a `schemas/schemas.py`. 
-Any Pydantic models in that directory will be loaded and converted to...
+Any Pydantic models in that file will be loaded and converted.
 
 #### Generate Kotlin Data Classes...
 

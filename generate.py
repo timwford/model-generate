@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import schemas.test_schema
 
 from swift_model import swift
-from klaxon_model import klaxon
+from kotlin_model import klaxon
 
 def generate_swift_models(schema: BaseModel):
     return swift.make_model(schema)
@@ -19,7 +19,7 @@ def generate_mobile_models():
         if aModule is not None:
             try:
                 generate_klaxon_models(aModule)
-                generate_swift_models(aModule)
+                # generate_swift_models(aModule)
             except AttributeError:
                 print("Not a pydantic model")
 

@@ -5,5 +5,6 @@ data class TestSchema(
 	val int_test: Integer,
 	val float_test: Float,
 	val bool_test: Boolean,
-	val optional_test: String?
+	val optional_test: Optional_Test?,
+	val test_list: String
 )
