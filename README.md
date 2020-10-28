@@ -118,6 +118,6 @@ git submodule update --init --remote
 cp schemas.py model-generate/schemas
 python3 model-generate/generate.py
 ```
-- Pay @jamckee
+- Buy @jamckee some coffee 🥳
 
 Assuming you have a `schema.py` file in the directory you run this script in, this will generate all the models each time you run the script.
