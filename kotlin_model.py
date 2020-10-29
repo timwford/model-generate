@@ -113,5 +113,5 @@ class KotlinModel(Model):
         return model_text
 
 
-klaxon = KotlinModel(".kt", "data class", "", "var", "Integer", "Boolean", "Float",
+klaxon = KotlinModel(".kt", "data class", "", "var", "Int", "Boolean", "Float",
                      "String")
