@@ -4,7 +4,7 @@ from pydantic.fields import ModelField
 from typing import List
 
 from model import Model
-from pydantic import BaseModel, BaseConfig
+from pydantic import BaseModel, BaseConfig, conint, confloat, conlist, constr
 
 """ SwiftUI
 
@@ -48,7 +48,12 @@ class SwiftLanguage(Model):
             field: ModelField = schema.__fields__[field_key]
             outer_type = field.outer_type_
             name: str = field.name
-            data_type = field.type_
+            field_config = field.model_config.fields[field_key]
+            if field_config['python_type']:
+                data_type = field_config['python_type']
+            else:
+                data_type = field.type_
+            print(data_type)
             required: bool = field.required
 
             names_text += f" {name},"
@@ -73,7 +78,6 @@ class SwiftLanguage(Model):
 
             if data_type is str:
                 data_type_str = self.string_type
-
             elif data_type is int:
                 data_type_str = self.int_type
             elif data_type is float:

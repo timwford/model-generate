@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-import schemas.schema
+import schema
 
 from swift_model import swift
 from kotlin_model import klaxon
@@ -15,7 +15,7 @@ def generate_klaxon_models(schema: BaseModel):
 
 
 def generate_mobile_models():
-    for aModule in vars(schemas.schema).values():
+    for aModule in vars(schema).values():
         print(aModule)
         if aModule is not None:
             try:
